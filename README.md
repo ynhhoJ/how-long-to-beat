@@ -2,7 +2,7 @@
   <img src="./LOGO.svg" width="350"/>
   <h1>Telegram BOT: How Long To Beat</h1>
 
-Telegram BOT written on RUST using [Teloxide Framework](https://github.com/teloxide/teloxide) which show statistics from [HowLongToBeat.com](https://howlongtobeat.com)
+Telegram BOT written on [Rust](https://www.rust-lang.org/) using [Teloxide Framework](https://github.com/teloxide/teloxide) which show statistics from [HowLongToBeat.com](https://howlongtobeat.com)
 </div>
 
 ## 🚀 Run
