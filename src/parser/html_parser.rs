@@ -20,7 +20,7 @@ fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
     let vector_with_game_details = game_details_element.text().collect::<Vec<_>>();
     let filtered_game_details = vector_with_game_details
         .iter()
-        .filter(|data| data.contains("\n") == false && data.contains("\t") == false)
+        .filter(|data| !data.contains('\n') && !data.contains('\t'))
         .collect::<Vec<_>>();
 
     let mut string_with_hours_to_beat_the_game = String::new();
@@ -30,7 +30,7 @@ fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
         //      ODD number is title of category, like "Main Story", "Main + Extra" etc.
         //      EVEN number is needed time to complete the game. Idk at this moment how this part of code
         //      can be written better.
-        let is_title = is_even_number(i + 1) == false;
+        let is_title = !is_even_number(i + 1);
 
         if is_title {
             string_with_hours_to_beat_the_game.push_str(&format!("<b>{}</b>: ", el).to_string());
@@ -48,7 +48,7 @@ fn get_title_of_game(element: ElementRef) -> String {
 
     match game_title.text().next() {
         Some(data) => data.to_string(),
-        None => return "undefined".to_string(),
+        None => "undefined".to_string(),
     }
 }
 
