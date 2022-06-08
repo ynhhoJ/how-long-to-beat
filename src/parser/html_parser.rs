@@ -26,7 +26,7 @@ fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
     let mut string_with_hours_to_beat_the_game = String::new();
 
     for (i, el) in filtered_game_details.iter().enumerate() {
-        // NOTE: 
+        // NOTE:
         //      ODD number is title of category, like "Main Story", "Main + Extra" etc.
         //      EVEN number is needed time to complete the game. Idk at this moment how this part of code
         //      can be written better.
@@ -65,20 +65,26 @@ pub fn parse_game_data_from_html(html_to_parse: String) -> Vec<HowLongToBeatResp
     let ul_selector = Selector::parse("ul").unwrap();
     let li_selector = Selector::parse("li").unwrap();
 
-    let ul = fragment.select(&ul_selector).next().unwrap();
-    let mut response: Vec<HowLongToBeatResponse> = Vec::new();
+    let ul_option = fragment.select(&ul_selector).next();
+    let mut how_long_to_beat_response: Vec<HowLongToBeatResponse> = Vec::new();
+
+    let ul = match ul_option {
+        Some(data) => data,
+        // NOTE: If `ul_option` is `None` as response will be returned empty vector.
+        None => return how_long_to_beat_response,
+    };
 
     for element in ul.select(&li_selector) {
         let image_url = get_link_to_image(element);
         let how_long_to_beat_time = get_how_long_to_beat_time_of_game(element);
         let title = get_title_of_game(element);
 
-        response.push(HowLongToBeatResponse {
+        how_long_to_beat_response.push(HowLongToBeatResponse {
             title,
             image_url,
             how_long_to_beat_time,
         })
     }
 
-    response
+    how_long_to_beat_response
 }
