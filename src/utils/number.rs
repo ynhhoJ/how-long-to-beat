@@ -5,5 +5,5 @@ pub fn is_even_number(number: usize) -> bool {
         return false;
     }
 
-    return true;
+    true
 }

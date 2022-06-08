@@ -22,3 +22,10 @@ $ cargo run
 ## ✏️ Code conduction
 
 This project uses [Gitmoji](https://gitmoji.carloscuesta.me) for commit messages
+
+## 🎨 Examples
+
+<div align="center" style="display: flex; align-items: center; justify-content: center;">
+    <img src="./images/inline_search.png"/>
+    <img src="./images/inline_response.png" style="margin-left: 50px;"/>
+</div>

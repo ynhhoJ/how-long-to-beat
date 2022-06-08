@@ -19,7 +19,5 @@ pub async fn main(game_name: String) -> Result<Vec<HowLongToBeatResponse>, Strin
 
     let response = parse_game_data_from_html(body_as_string);
 
-    println!("response: {:#?}", response);
-
     Ok(response)
 }
