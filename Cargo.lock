@@ -475,7 +475,7 @@ dependencies = [
 
 [[package]]
 name = "how_long_to_beat"
-version = "0.0.3"
+version = "0.0.5"
 dependencies = [
  "dotenvy",
  "hyper",
