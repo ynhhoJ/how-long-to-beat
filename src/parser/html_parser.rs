@@ -42,10 +42,21 @@ fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
     string_with_hours_to_beat_the_game
 }
 
+fn get_title_of_game(element: ElementRef) -> String {
+    let title_selector = Selector::parse(".search_list_details h3 a").unwrap();
+    let game_title = element.select(&title_selector).next().unwrap();
+
+    match game_title.text().next() {
+        Some(data) => data.to_string(),
+        None => return "undefined".to_string(),
+    }
+}
+
 #[derive(Debug)]
 pub struct HowLongToBeatResponse {
-    image_url: String,
-    how_long_to_beat_time: String,
+    pub how_long_to_beat_time: String,
+    pub image_url: String,
+    pub title: String,
 }
 
 pub fn parse_game_data_from_html(html_to_parse: String) -> Vec<HowLongToBeatResponse> {
@@ -60,8 +71,10 @@ pub fn parse_game_data_from_html(html_to_parse: String) -> Vec<HowLongToBeatResp
     for element in ul.select(&li_selector) {
         let image_url = get_link_to_image(element);
         let how_long_to_beat_time = get_how_long_to_beat_time_of_game(element);
+        let title = get_title_of_game(element);
 
         response.push(HowLongToBeatResponse {
+            title,
             image_url,
             how_long_to_beat_time,
         })
