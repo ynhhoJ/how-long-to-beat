@@ -2,7 +2,6 @@ use crate::utils::number::is_even_number;
 use scraper::{ElementRef, Html, Selector};
 
 fn get_link_to_image(element: ElementRef) -> String {
-    // get_cover_image
     let cover_image_selector = Selector::parse("img").unwrap();
     let cover_image = element
         .select(&cover_image_selector)
@@ -15,27 +14,32 @@ fn get_link_to_image(element: ElementRef) -> String {
 }
 
 fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
-    let game_list_details_selector = Selector::parse(".search_list_details_block").unwrap();
-    let game_list_details = element.select(&game_list_details_selector).next().unwrap();
+    let game_details_selector = Selector::parse(".search_list_details_block").unwrap();
+    let game_details_element = element.select(&game_details_selector).next().unwrap();
 
-    let text_values_from_detail = game_list_details.text().collect::<Vec<_>>();
-    let filtered_values = text_values_from_detail
+    let vector_with_game_details = game_details_element.text().collect::<Vec<_>>();
+    let filtered_game_details = vector_with_game_details
         .iter()
         .filter(|data| data.contains("\n") == false && data.contains("\t") == false)
         .collect::<Vec<_>>();
 
-    let mut string_for_answer = String::new();
+    let mut string_with_hours_to_beat_the_game = String::new();
 
-    for (i, el) in filtered_values.iter().enumerate() {
-        // NOTE: Every second element is how long to beat game
-        if is_even_number(i + 1) {
-            string_for_answer.push_str(&format!("{}\n", el).to_string());
+    for (i, el) in filtered_game_details.iter().enumerate() {
+        // NOTE: 
+        //      ODD number is title of category, like "Main Story", "Main + Extra" etc.
+        //      EVEN number is needed time to complete the game. Idk at this moment how this part of code
+        //      can be written better.
+        let is_title = is_even_number(i + 1) == false;
+
+        if is_title {
+            string_with_hours_to_beat_the_game.push_str(&format!("<b>{}</b>: ", el).to_string());
         } else {
-            string_for_answer.push_str(&format!("{}: ", el).to_string());
+            string_with_hours_to_beat_the_game.push_str(&format!("{}\n", el).to_string());
         }
     }
 
-    string_for_answer
+    string_with_hours_to_beat_the_game
 }
 
 #[derive(Debug)]
