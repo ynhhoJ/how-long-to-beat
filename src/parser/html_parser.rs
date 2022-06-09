@@ -1,4 +1,4 @@
-use crate::utils::number::is_even_number;
+use crate::{utils::number::is_even_number, variables::HOW_LONG_TO_BEAT_WEBSITE};
 use scraper::{ElementRef, Html, Selector};
 
 fn get_link_to_image(element: ElementRef) -> String {
@@ -10,7 +10,11 @@ fn get_link_to_image(element: ElementRef) -> String {
         .value()
         .attr("src");
 
-    format!("{}{}", "https://howlongtobeat.com", cover_image.unwrap())
+    format!(
+        "{}{}",
+        HOW_LONG_TO_BEAT_WEBSITE.as_str(),
+        cover_image.unwrap()
+    )
 }
 
 fn get_how_long_to_beat_time_of_game(element: ElementRef) -> String {
